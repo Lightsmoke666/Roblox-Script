@@ -286,3 +286,139 @@ Tab:AddToggle({
 	    end
 	end
 })
+Tab:AddButton({
+	Name = "飞行",
+	Callback = function()
+loadstring("\108\111\97\100\115\116\114\105\110\103\40\103\97\109\101\58\72\116\116\112\71\101\116\40\40\39\104\116\116\112\115\58\47\47\103\105\115\116\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\109\101\111\122\111\110\101\89\84\47\98\102\48\51\55\100\102\102\57\102\48\97\55\48\48\49\55\51\48\52\100\100\100\54\55\102\100\99\100\51\55\48\47\114\97\119\47\101\49\52\101\55\52\102\52\50\53\98\48\54\48\100\102\53\50\51\51\52\51\99\102\51\48\98\55\56\55\48\55\52\101\98\51\99\53\100\50\47\97\114\99\101\117\115\37\50\53\50\48\120\37\50\53\50\48\102\108\121\37\50\53\50\48\50\37\50\53\50\48\111\98\102\108\117\99\97\116\111\114\39\41\44\116\114\117\101\41\41\40\41\10\10")()
+  	end
+})
+Tab:AddButton({
+	Name = "透视",
+	Callback = function()
+local FillColor = Color3.fromRGB(175,25,255)
+local DepthMode = "AlwaysOnTop"
+local FillTransparency = 0.5
+local OutlineColor = Color3.fromRGB(255,255,255)
+local OutlineTransparency = 0
+local CoreGui = game:FindService("CoreGui")
+local Players = game:FindService("Players")
+local lp = Players.LocalPlayer
+local connections = {}
+local Storage = Instance.new("Folder")
+Storage.Parent = CoreGui
+Storage.Name = "Highlight_Storage"
+local function Highlight(plr)
+    local Highlight = Instance.new("Highlight")
+    Highlight.Name = plr.Name
+    Highlight.FillColor = FillColor
+    Highlight.DepthMode = DepthMode
+    Highlight.FillTransparency = FillTransparency
+    Highlight.OutlineColor = OutlineColor
+    Highlight.OutlineTransparency = 0
+    Highlight.Parent = Storage
+    
+    local plrchar = plr.Character
+    if plrchar then
+        Highlight.Adornee = plrchar
+    end
+    connections[plr] = plr.CharacterAdded:Connect(function(char)
+        Highlight.Adornee = char
+    end)
+end
+Players.PlayerAdded:Connect(Highlight)
+for i,v in next, Players:GetPlayers() do
+    Highlight(v)
+end
+Players.PlayerRemoving:Connect(function(plr)
+    local plrname = plr.Name
+    if Storage[plrname] then
+        Storage[plrname]:Destroy()
+    end
+    if connections[plr] then
+        connections[plr]:Disconnect()
+    end
+end)
+  	end
+})
+Tab:AddButton({
+	Name = "玩家进入提示",
+	Callback = function()
+    local tipBase64 = "aHR0cHM6Ly9yYXcuc2lnbmF0dXJlY29udGVudC5jb20vYm95c2NwL3NjcmlzY3JpcHNjL21haW4vYmJuLmx1YQ=="
+    local tipLink = HttpService:Base64Decode(tipBase64)
+    loadstring(game:HttpGet(tipLink))()
+  	end
+})
+
+local Tab = Window:MakeTab({
+	Name = "黑暗欺骗",
+	Icon = "rbxassetid://7733779610",
+	PremiumOnly = false
+})
+Tab:AddButton({
+  Name = "自动通关收集",
+  Callback = function()
+    local darkBase64 = "aHR0cHM6Ly9yYXcuc2lnbmF0dXJlY29udGVudC5jb20vOWtuLTEvRGFyay9tYWluL0F1dG8ubHVh"
+    local darkLink = HttpService:Base64Decode(darkBase64)
+    loadstring(game:HttpGet(darkLink))()
+  end
+})
+
+local Tab = Window:MakeTab({
+	Name = "Ohio",
+	Icon = "rbxassetid://7733779610",
+	PremiumOnly = false
+})
+Tab:AddButton({
+  Name = "雪花Ohio",
+  Callback = function()
+    local xhOhioBase64 = "aHR0cHM6Ly9yYXcuc2lnbmF0dXJlY29udGVudC5jb20vY2FueGlhb3h1ZTY2Ni9TdHJpbmcvcmVmcy9oZWFkcy9tYWluL09oaW8zU2NyaXB0"
+    local xhOhioLink = HttpService:Base64Decode(xhOhioBase64)
+    loadstring(game:HttpGet(xhOhioLink))()
+  end
+})
+Tab:AddButton({
+  Name = "雪花另一个版本",
+  Callback = function()
+    local xh2OhioBase64 = "aHR0cHM6Ly9yYXcuc2lnbmF0dXJlY29udGVudC5jb20vYWFhamFja21pbGxlci1odWIvRmFuZy9tYWluL3Nub3cgT2hpby5sdWE="
+    local xh2OhioLink = HttpService:Base64Decode(xh2OhioBase64)
+    loadstring(game:HttpGet(xh2OhioLink, true))()
+  end
+})
+Tab:AddButton({
+  Name = "XA",
+  Callback = function()
+    local xaOhioBase64 = "aHR0cHM6Ly9yYXcuc2lnbmF0dXJlY29udGVudC5jb20vWGluZ3RhaWR1YW4vU2NyaXB0L3JlZnMvaGVhZHMvbWFpbi9HYW1lcy8lRTUlQTklQTklJTlklRTYlODklQTklRTUlQkUlOEMubHVh"
+    local xaOhioLink = HttpService:Base64Decode(xaOhioBase64)
+    loadstring(game:HttpGet(xaOhioLink))()
+  end
+})
+Tab:AddButton({
+  Name = "神青Ohio",
+  Callback = function()
+    local sqOhioBase64 = "aHR0cHM6Ly9yYXcuc2lnbmF0dXJlY29udGVudC5jb20vZ3ljZ2NoZ3lmeXRkdHRyL3NoZW5xaW4vcmVmcy9oZWFkcy9tYWluL29oaW8udHh0"
+    local sqOhioLink = HttpService:Base64Decode(sqOhioBase64)
+    loadstring(game:HttpGet(sqOhioLink))()
+  end
+})
+
+local Tab = Window:MakeTab({
+	Name = "其他",
+	Icon = "rbxassetid://7733779610",
+	PremiumOnly = false
+})
+Tab:AddButton({
+  Name = "炉管脚本R6",
+  Callback = function()
+    local lgR6Base64 = "aHR0cHM6Ly9wYXN0ZWZ5LmFwcC93YTN2MlZnbS9yYXc="
+    local lgR6Link = HttpService:Base64Decode(lgR6Base64)
+    loadstring(game:HttpGet(lgR6Link))()
+  end
+})
+Tab:AddButton({
+  Name = "炉管脚本R15",
+  Callback = function()
+    local lgR15Base64 = "aHR0cHM6Ly9wYXN0ZWZ5LmFwcC9ZWm9nbE95Si9yYXc="
+    local lgR15Link = HttpService:Base64Decode(lgR15Base64)
+    loadstring(game:HttpGet(lgR15Link))()
+  end
+})
