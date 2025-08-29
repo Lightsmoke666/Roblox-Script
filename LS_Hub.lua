@@ -121,56 +121,79 @@ Tabs.Combat:Toggle({
     Desc = "开了就不能关了",
     Value = false,
     Callback = function(state)
+        -- 仅在手动开启（state为true）时执行，避免自动开启
+        if not state then return end
+
         local FillColor = Color3.fromRGB(175,25,255)
         local DepthMode = "AlwaysOnTop"
         local FillTransparency = 0.5
         local OutlineColor = Color3.fromRGB(255,255,255)
         local OutlineTransparency = 0
 
-        local CoreGui = game:FindService("CoreGui")
-        local Players = game:FindService("Players")
+        local CoreGui = game:GetService("CoreGui")
+        local Players = game:GetService("Players")
         local lp = Players.LocalPlayer
         local connections = {}
 
-        local Storage = Instance.new("Folder")
-        Storage.Parent = CoreGui
-        Storage.Name = "Highlight_Storage"
+        -- 核心功能封装到startCoreFunction中，统一管理透视逻辑
+        local function startCoreFunction()
+            -- 避免重复创建存储文件夹，防止冗余
+            local Storage = CoreGui:FindFirstChild("Highlight_Storage") or Instance.new("Folder")
+            Storage.Name = "Highlight_Storage"
+            Storage.Parent = CoreGui
 
-        local function Highlight(plr)
-            local Highlight = Instance.new("Highlight")
-            Highlight.Name = plr.Name
-            Highlight.FillColor = FillColor
-            Highlight.DepthMode = DepthMode
-            Highlight.FillTransparency = FillTransparency
-            Highlight.OutlineColor = OutlineColor
-            Highlight.OutlineTransparency = 0
-            Highlight.Parent = Storage
-            
-            local plrchar = plr.Character
-            if plrchar then
-                Highlight.Adornee = plrchar
+            local function Highlight(plr)
+                -- 排除本地玩家，避免自身被高亮
+                if plr == lp then return end
+                
+                -- 清理同玩家已有高亮，防止重复叠加
+                local existingHighlight = Storage:FindFirstChild(plr.Name)
+                if existingHighlight then existingHighlight:Destroy() end
+
+                local HighlightObj = Instance.new("Highlight")
+                HighlightObj.Name = plr.Name
+                HighlightObj.FillColor = FillColor
+                HighlightObj.DepthMode = DepthMode
+                HighlightObj.FillTransparency = FillTransparency
+                HighlightObj.OutlineColor = OutlineColor
+                HighlightObj.OutlineTransparency = OutlineTransparency
+                HighlightObj.Parent = Storage
+                
+                -- 绑定角色（兼容初始角色和后续生成角色）
+                local function bindCharacter(char)
+                    if char then HighlightObj.Adornee = char end
+                end
+                bindCharacter(plr.Character)
+
+                -- 存储角色生成连接，便于后续清理
+                connections[plr] = plr.CharacterAdded:Connect(bindCharacter)
             end
 
-            connections[plr] = plr.CharacterAdded:Connect(function(char)
-                Highlight.Adornee = char
+            -- 监听新玩家
+            local playerAddedConn = Players.PlayerAdded:Connect(Highlight)
+            table.insert(connections, "playerAddedConn", playerAddedConn)
+
+            -- 处理当前已存在的玩家
+            for _, plr in ipairs(Players:GetPlayers()) do
+                Highlight(plr)
+            end
+
+            -- 玩家离开时清理资源，防止内存泄漏
+            local playerRemovingConn = Players.PlayerRemoving:Connect(function(plr)
+                Storage:FindFirstChild(plr.Name)?.Destroy()
+                if connections[plr] then
+                    connections[plr]:Disconnect()
+                    connections[plr] = nil
+                end
             end)
+            table.insert(connections, "playerRemovingConn", playerRemovingConn)
         end
 
-        Players.PlayerAdded:Connect(Highlight)
-        for i,v in next, Players:GetPlayers() do
-            Highlight(v)
-        end
-        Players.PlayerRemoving:Connect(function(plr)
-            local plrname = plr.Name
-            if Storage[plrname] then
-                Storage[plrname]:Destroy()
-            end
-            if connections[plr] then
-                connections[plr]:Disconnect()
-            end
-        end)
+        -- 调用核心功能函数，启动透视逻辑
+        startCoreFunction()
     end
 })
+
 Tabs.Combat:Toggle({
     Title = "穿墙",
     Value = false,
