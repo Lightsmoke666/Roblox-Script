@@ -116,7 +116,7 @@ Tabs.Combat:Toggle({
     end
 })
 
-Tabs.Combat:Toggle({
+Tabs.Combat:Button({
     Title = "透视",
     Desc = "开启玩家透视功能，高亮显示其他玩家",
     Callback = function()
