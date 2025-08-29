@@ -116,10 +116,11 @@ Tabs.Combat:Toggle({
     end
 })
 
-Tabs.Combat:Button({
+Tabs.Combat:Toggle({
     Title = "透视",
-    Desc = "开启玩家透视功能，高亮显示其他玩家",
-    Callback = function()
+    Desc = "开了就不能关了",
+    Value = false,
+    Callback = function(state)
         local FillColor = Color3.fromRGB(175,25,255)
         local DepthMode = "AlwaysOnTop"
         local FillTransparency = 0.5
