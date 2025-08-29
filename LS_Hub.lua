@@ -36,11 +36,10 @@ local Window = WindUI:CreateWindow({
 })
 
 
--- 创建指定的大类（作为标签页）
 local Tabs = {
     Main = Window:Tab({ Title = "主页", Icon = "rbxassetid://6026568198" }),
     Player = Window:Tab({ Title = "玩家", Icon = "user" }),
-    Combat = Window:Tab({ Title = "通用", Icon = "teleport" }),
+    Combat = Window:Tab({ Title = "通用", Icon = "star" }),
     Script = Window:Tab({ Title = "脚本中心", Icon = "star" }),
     Ball = Window:Tab({ Title = "刀刃球", Icon = "gift" }),
     
@@ -50,8 +49,6 @@ local Tabs = {
 Window:SelectTab(1)
 
 
--- 你可以在这里为每个标签页添加自己的功能和UI元素
--- 例如：
 
 Tabs.Main:Paragraph({
     Title = "欢迎使用 LS_Hub",
@@ -120,77 +117,6 @@ Tabs.Combat:Toggle({
 })
 
 Tabs.Combat:Toggle({
-    Title = "穿墙",
-    Value = false,
-    Callback = function(state)
-        if state then
-            local Noclip = true
-            local Stepped = game:GetService("RunService").Stepped:Connect(function()
-                if Noclip then
-                    local character = game.Players.LocalPlayer.Character
-                    if character then
-                        for _, part in pairs(character:GetDescendants()) do
-                            if part:IsA("BasePart") then
-                                part.CanCollide = false
-                            end
-                        end
-                    end
-                else
-                    Stepped:Disconnect()
-                end
-            end)
-        else
-            Noclip = false
-        end
-    end
-})
-
-Tabs.Combat:Toggle({
-    Title = "无限跳",
-    Callback = function()
-        loadstring(game:HttpGet("https://pastebin.com/raw/V5PQy3y0", true))()
-    end
-})
-
-Tabs.Combat:Button({
-    Title = "反挂机",
-    Callback = function()
-        loadstring(game:HttpGet("https://pastebin.com/raw/9fFu43FF"))()
-    end
-})
-
-Tabs.Combat:Button({
-    Title = "键盘",
-    Callback = function()
-        loadstring(game:HttpGet("https://gist.githubusercontent.com/RedZenXYZ/4d80bfd70ee27000660e4bfa7509c667/raw/da903c570249ab3c0c1a74f3467260972c3d87e6/KeyBoard%2520From%2520Ohio%2520Fr%2520Fr"))()
-    end
-})
-
-Tabs.Combat:Button({
-    Title = "聊天框画画",
-    Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/ocfi/_/refs/heads/main/a"))()
-    end
-})
-
-Tabs.Combat:Button({
-    Title = "飞行",
-    Desc = "加载飞行功能相关脚本",
-    Callback = function()
-    loadstring(game.HttpGet(game, "https://raw.githubusercontent.com/Xingtaiduan/Script/main/Content/FlyGuiV3"))()
-    end
-})
-
-Tabs.Combat:Button({
-    Title = "飞车",
-    Desc = "英文版的",
-    Callback = function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Lightsmoke666/Roblox-Script/refs/heads/main/飞车脚本源码.lua"))()
-    end
-})
-
-
-Tabs.Combat:Toggle({
     Title = "透视",
     Desc = "开启玩家透视功能，高亮显示其他玩家",
     Callback = function()
@@ -244,33 +170,59 @@ Tabs.Combat:Toggle({
         end)
     end
 })
-
 Tabs.Combat:Toggle({
-    Title = "玩家进入提示",
-    Desc = "加载玩家进入游戏时的提示功能脚本",
+    Title = "穿墙",
+    Value = false,
+    Callback = function(state)
+        if state then
+            local Noclip = true
+            local Stepped = game:GetService("RunService").Stepped:Connect(function()
+                if Noclip then
+                    local character = game.Players.LocalPlayer.Character
+                    if character then
+                        for _, part in pairs(character:GetDescendants()) do
+                            if part:IsA("BasePart") then
+                                part.CanCollide = false
+                            end
+                        end
+                    end
+                else
+                    Stepped:Disconnect()
+                end
+            end)
+        else
+            Noclip = false
+        end
+    end
+})
+
+
+
+Tabs.Combat:Button({
+    Title = "飞行",
+    Desc = "加载飞行功能相关脚本",
     Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/boyscp/scriscriptsc/main/bbn.lua"))()
+    loadstring(game.HttpGet(game, "https://raw.githubusercontent.com/Xingtaiduan/Script/main/Content/FlyGuiV3"))()
     end
 })
 
 Tabs.Combat:Button({
-    Title = "范围",
-    Desc = "通用范围",
+    Title = "飞车",
+    Desc = "英文版的",
     Callback = function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Lightsmoke666/Roblox-Script/refs/heads/main/通用碰撞箱拓展器(Universal HitBox Expander).txt"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Lightsmoke666/Roblox-Script/refs/heads/main/飞车脚本源码.lua"))()
     end
 })
 
 
 
-
-
-
-
-
-
-
-
+Tabs.Combat:Button({
+    Title = "透视自瞄范围",
+    Desc = "三合一",
+    Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Lightsmoke666/Roblox-Script/refs/heads/main/通用碰撞箱拓展器(Universal HitBox Expander).txt"))()
+    end
+})
 
 
 
