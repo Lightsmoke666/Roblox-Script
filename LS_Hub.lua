@@ -33,8 +33,21 @@ local Window = WindUI:CreateWindow({
     User = { Enabled = true },
     SideBarWidth = 200,
     ScrollBarEnabled = true,
-})
+    Background = "https://create.roblox.com/store/asset/1441878187/Anime-Neko-Maid?keyword=neko&pageNumber=1&pagePosition=92"
+    })
 
+        Window:Tag({
+        Title = "V1.0 Beta",
+        Color = Color3.fromHex("#30ff6a")
+    })
+    Window:Tag({
+        Title = "云更ing", 
+        Color = Color3.fromHex("#315dff")
+    })
+    local TimeTag = Window:Tag({
+        Title = "🤗",
+        Color = Color3.fromHex("#000000")
+    })
 
 local Tabs = {
     Main = Window:Tab({ Title = "主页", Icon = "rbxassetid://6026568198" }),
@@ -42,6 +55,7 @@ local Tabs = {
     Combat = Window:Tab({ Title = "通用", Icon = "star" }),
     Script = Window:Tab({ Title = "脚本中心", Icon = "star" }),
     Ball = Window:Tab({ Title = "刀刃球", Icon = "gift" }),
+    Slap = Window:Tap({ Title ="巴掌", Icon = "gift "}),
     
 }
 
@@ -144,11 +158,12 @@ Tabs.Combat:Toggle({
 
 
 
-Tabs.Combat:Button({
+Tabs.Combat:Toggle({
     Title = "飞行",
     Desc = "加载飞行功能相关脚本",
+    Value = true
     Callback = function()
-    loadstring(game.HttpGet(game, "https://raw.githubusercontent.com/Xingtaiduan/Script/main/Content/FlyGuiV3"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/xiaow6720-max/-1/c62d80a8fbd0175a28814be2b0858d45db74b8a2/飞行脚本V3(全游戏通用) .txt"))()
     end
 })
 
@@ -162,11 +177,12 @@ Tabs.Combat:Button({
 
 
 
-Tabs.Combat:Button({
-    Title = "透视自瞄范围",
-    Desc = "三合一",
+Tabs.Combat:Toggle({
+    Title = "透视",
+    Desc = "纯透视",
+    Value = true
     Callback = function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Lightsmoke666/Roblox-Script/refs/heads/main/通用碰撞箱拓展器(Universal HitBox Expander).txt"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/DevSloPo/ESP_Xuan/refs/heads/main/ESP.lua"))()
     end
 })
 
@@ -226,3 +242,11 @@ Tabs.Ball:Button({
 Window:OnClose(function()
     print("UI closed.")
 end)
+
+Tabs.Script:Button({
+    Title = "获得所有徽章手套",
+    Desc = "群友提供",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.gitcode.com/Xingtaiduan/Scripts/raw/main/Loader.lua"))()
+    end
+})
