@@ -204,6 +204,11 @@ Tabs.Combat:Toggle({
     end
 })
 
+Tabs.Combat:Button({
+    Title = "透视",
+    Desc = "无功能请等待更新"
+})
+
 
 Tabs.Combat:Button({
     Title = "键盘",
@@ -242,15 +247,6 @@ Tabs.Combat:Toggle({
         loadstring(game:HttpGet("https://raw.githubusercontent.com/boyscp/scriscriptsc/main/bbn.lua"))()
     end
 })
-
-Tabs.Combat:Toggle({
-    Title = "通用透视",
-    Value = false,
-    Desc = "更新ing",
-    Callback = function(state)
-        if state then
-    end
-})        
 
 --刀刃球脚本
 Tabs.BladeBall:Button({
