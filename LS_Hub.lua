@@ -56,8 +56,9 @@ local Tabs = {
     Script = Window:Tab({ Title = "脚本中心", Icon = "star" }),
     BladeBall = Window:Tab({ Title = "刀刃球", Icon = "star" }),
     Slap = Window:Tab({ Title = "巴掌模拟器", Icon = "star" }),
-}
-
+    Doors = Window:Tab({ Title = "Doors", Icon = "star" }),
+    LuckBox = Window:Tab({ Title = "幸运方块",Icon = "star" })
+    }
 
 Window:SelectTab(1)
 
@@ -74,6 +75,7 @@ Tabs.Main:Paragraph({
     ThumbnailSize = 120
 })
 
+--玩家功能
 Tabs.Player:Slider({
     Title = "跳跃",
     Value = {
@@ -117,6 +119,8 @@ Tabs.Player:Slider({
     end
 })
 
+
+---脚本中心
 Tabs.Script:Button({
     Title = "禁漫中心",
     Desc = "",
@@ -151,6 +155,8 @@ Tabs.Script:Button({
         loadstring(game:HttpGet("https://raw.githubusercontent.com/xiaopi77/xiaopi77/main/QQ1002100032-Roblox-Pi-script.lua"))()
     end
 })
+
+--通用脚本
 
 Tabs.Combat:Toggle({
     Title = "夜视",
@@ -192,7 +198,8 @@ Tabs.Combat:Toggle({
 
 Tabs.Combat:Toggle({
     Title = "无限跳",
-    Callback = function()
+    Value = false,
+    Callback = function(state)
         loadstring(game:HttpGet("https://pastebin.com/raw/V5PQy3y0", true))()
     end
 })
@@ -200,7 +207,7 @@ Tabs.Combat:Toggle({
 
 Tabs.Combat:Button({
     Title = "键盘",
-    Callback = function()
+    Callback = function(state)
         loadstring(game:HttpGet("https://gist.githubusercontent.com/RedZenXYZ/4d80bfd70ee27000660e4bfa7509c667/raw/da903c570249ab3c0c1a74f3467260972c3d87e6/KeyBoard%2520From%2520Ohio%2520Fr%2520Fr"))()
     end
 })
@@ -216,7 +223,7 @@ Tabs.Combat:Button({
     Title = "飞行",
     Desc = "加载飞行功能相关脚本",
     Callback = function()
-    loadstring(game.HttpGet(game, "https://raw.githubusercontent.com/Xingtaiduan/Script/main/Content/FlyGuiV3"))()
+    loadstring(game.HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/main/Content/FlyGuiV3"))()
     end
 })
 
@@ -230,23 +237,20 @@ Tabs.Combat:Button({
 
 Tabs.Combat:Toggle({
     Title = "玩家进入提示",
-    Desc = "加载玩家进入游戏时的提示功能脚本",
+    Desc = "加载玩家进入游戏时的提示",
     Callback = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/boyscp/scriscriptsc/main/bbn.lua"))()
     end
 })
-Tabs.Combat:Button({
-    Title = "夜视",
+
+Tabs.Combat:Toggle({
+    Title = "通用透视",
     Value = false,
+    Desc = "更新ing",
     Callback = function(state)
         if state then
-            game.Lighting.Ambient = Color3.new(1, 1, 1)  
-        else
-            game.Lighting.Ambient = Color3.new(0, 0, 0) 
-        end
-    end
-})
 
+--刀刃球脚本
 Tabs.BladeBall:Button({
     Title = "ArgonHubX",
     Desc = "英文脚本",
@@ -255,6 +259,7 @@ Tabs.BladeBall:Button({
     end
 })
 
+--巴掌模拟器脚本
 Tabs.Slap:Button({
     Title = "巴掌模拟器脚本",
     Desc = "获得全部徽章手套(付费的除外)",
@@ -262,6 +267,31 @@ Tabs.Slap:Button({
     loadstring(game:HttpGet('https://pastefy.app/lgEl3Mga/raw'))()
     end
 })
+
+--doors 脚本
+Tabs.Doors:Button({
+    Title = "prohax",
+    Desc = "由群友繁花提供",
+    Callback = function()
+    getgenv().LibraryIs = "Obsidian" -- or Linoria  
+loadstring(game:HttpGet("https://raw.githubusercontent.com/TheHunterSolo1/Scripts/main/ProhaxV4"))()
+    end
+})
+--幸运方块脚本
+Tabs.LuckBox:Toggle({
+    Title = "刷幸运方块并自动开启",
+    Value = false,
+    Desc = "打开后不可关闭",
+    Callback = function(state)
+        if state then
+            while true do
+                task.wait()
+                game:GetService("ReplicatedStorage"):WaitForChild("SpawnLuckyBlock"):FireServer()
+            end
+        end
+    end
+})
+
 
 Window:OnClose(function()
     print("UI closed.")
