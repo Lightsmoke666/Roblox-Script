@@ -200,7 +200,9 @@ Tabs.Combat:Toggle({
     Title = "无限跳",
     Value = false,
     Callback = function(state)
-        loadstring(game:HttpGet("https://pastebin.com/raw/V5PQy3y0", true))()
+        if state then
+            loadstring(game:HttpGet("https://pastebin.com/raw/V5PQy3y0", true))()
+        end
     end
 })
 
